@@ -1,4 +1,4 @@
-# https://github.com/github/gitignore/blob/master/Python.gitignore
+# general https://github.com/github/gitignore/blob/master/Python.gitignore
 .env
 .venv
 env/
@@ -10,5 +10,8 @@ venv.bak/
 __pycache__/
 *.py[cod]
 *$py.class
-_.py
 .scrapy
+# local
+_.py
+tcph/
+*.csv
