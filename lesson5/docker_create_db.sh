@@ -1,8 +1,8 @@
 #!/bin/bash
 source .env
 
-docker exec -it $SOURCE_DB_DOCKER_CONTAINER_NAME psql -U $DB_USER -c "create database $SOURCE_DB_NAME"
-docker exec -it $TARGET_DB_DOCKER_CONTAINER_NAME psql -U $DB_USER -c "create database $TARGET_DB_NAME"
+docker exec -it "$SOURCE_DB_DOCKER_CONTAINER_NAME" psql -U "$DB_USER" -c "create database $SOURCE_DB_NAME"
+docker exec -it "$TARGET_DB_DOCKER_CONTAINER_NAME" psql -U "$DB_USER" -c "create database $TARGET_DB_NAME"
 
 docker cp tcph/dss.ddl "$SOURCE_DB_DOCKER_CONTAINER_NAME":/
 docker cp tcph/dss.ddl "$TARGET_DB_DOCKER_CONTAINER_NAME":/
