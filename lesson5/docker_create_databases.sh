@@ -1,26 +1,28 @@
 #!/bin/bash
-docker exec -it my_postgres_source psql -U root -c "create database my_source_database"
-docker exec -it my_postgres_target psql -U root -c "create database my_target_database"
+source .env
 
-docker cp tcph/dss.ddl my_postgres_source:/
-docker cp tcph/dss.ddl my_postgres_target:/
-docker cp tcph/customer.tbl my_postgres_source:/
-docker cp tcph/lineitem.tbl my_postgres_source:/
-docker cp tcph/nation.tbl my_postgres_source:/
-docker cp tcph/orders.tbl my_postgres_source:/
-docker cp tcph/part.tbl my_postgres_source:/
-docker cp tcph/partsupp.tbl my_postgres_source:/
-docker cp tcph/region.tbl my_postgres_source:/
-docker cp tcph/supplier.tbl my_postgres_source:/
+docker exec -it $SOURCE_DB_DOCKER_CONTAINER_NAME psql -U $DB_USER -c "create database $SOURCE_DB_NAME"
+docker exec -it $TARGET_DB_DOCKER_CONTAINER_NAME psql -U $DB_USER -c "create database $TARGET_DB_NAME"
 
-docker exec -it my_postgres_source psql my_source_database -f dss.ddl
-docker exec -it my_postgres_target psql my_target_database -f dss.ddl
+docker cp tcph/dss.ddl $SOURCE_DB_DOCKER_CONTAINER_NAME:/
+docker cp tcph/dss.ddl $TARGET_DB_DOCKER_CONTAINER_NAME:/
+docker cp tcph/customer.tbl $SOURCE_DB_DOCKER_CONTAINER_NAME:/
+docker cp tcph/lineitem.tbl $SOURCE_DB_DOCKER_CONTAINER_NAME:/
+docker cp tcph/nation.tbl $SOURCE_DB_DOCKER_CONTAINER_NAME:/
+docker cp tcph/orders.tbl $SOURCE_DB_DOCKER_CONTAINER_NAME:/
+docker cp tcph/part.tbl $SOURCE_DB_DOCKER_CONTAINER_NAME:/
+docker cp tcph/partsupp.tbl $SOURCE_DB_DOCKER_CONTAINER_NAME:/
+docker cp tcph/region.tbl $SOURCE_DB_DOCKER_CONTAINER_NAME:/
+docker cp tcph/supplier.tbl $SOURCE_DB_DOCKER_CONTAINER_NAME:/
 
-docker exec -it my_postgres_source psql my_source_database -c "\copy customer FROM '/customer.tbl' CSV DELIMITER '|'"
-docker exec -it my_postgres_source psql my_source_database -c "\copy lineitem FROM '/lineitem.tbl' CSV DELIMITER '|'"
-docker exec -it my_postgres_source psql my_source_database -c "\copy nation FROM '/nation.tbl' CSV DELIMITER '|'"
-docker exec -it my_postgres_source psql my_source_database -c "\copy orders FROM '/orders.tbl' CSV DELIMITER '|'"
-docker exec -it my_postgres_source psql my_source_database -c "\copy part FROM '/part.tbl' CSV DELIMITER '|'"
-docker exec -it my_postgres_source psql my_source_database -c "\copy partsupp FROM '/partsupp.tbl' CSV DELIMITER '|'"
-docker exec -it my_postgres_source psql my_source_database -c "\copy region FROM '/region.tbl' CSV DELIMITER '|'"
-docker exec -it my_postgres_source psql my_source_database -c "\copy supplier FROM '/supplier.tbl' CSV DELIMITER '|'"
+docker exec -it $SOURCE_DB_DOCKER_CONTAINER_NAME psql $SOURCE_DB_NAME -f dss.ddl
+docker exec -it $TARGET_DB_DOCKER_CONTAINER_NAME psql $TARGET_DB_NAME -f dss.ddl
+
+docker exec -it $SOURCE_DB_DOCKER_CONTAINER_NAME psql $SOURCE_DB_NAME -c "\copy customer FROM '/customer.tbl' CSV DELIMITER '|'"
+docker exec -it $SOURCE_DB_DOCKER_CONTAINER_NAME psql $SOURCE_DB_NAME -c "\copy lineitem FROM '/lineitem.tbl' CSV DELIMITER '|'"
+docker exec -it $SOURCE_DB_DOCKER_CONTAINER_NAME psql $SOURCE_DB_NAME -c "\copy nation FROM '/nation.tbl' CSV DELIMITER '|'"
+docker exec -it $SOURCE_DB_DOCKER_CONTAINER_NAME psql $SOURCE_DB_NAME -c "\copy orders FROM '/orders.tbl' CSV DELIMITER '|'"
+docker exec -it $SOURCE_DB_DOCKER_CONTAINER_NAME psql $SOURCE_DB_NAME -c "\copy part FROM '/part.tbl' CSV DELIMITER '|'"
+docker exec -it $SOURCE_DB_DOCKER_CONTAINER_NAME psql $SOURCE_DB_NAME -c "\copy partsupp FROM '/partsupp.tbl' CSV DELIMITER '|'"
+docker exec -it $SOURCE_DB_DOCKER_CONTAINER_NAME psql $SOURCE_DB_NAME -c "\copy region FROM '/region.tbl' CSV DELIMITER '|'"
+docker exec -it $SOURCE_DB_DOCKER_CONTAINER_NAME psql $SOURCE_DB_NAME -c "\copy supplier FROM '/supplier.tbl' CSV DELIMITER '|'"
