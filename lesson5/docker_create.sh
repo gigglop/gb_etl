@@ -6,29 +6,9 @@ docker volume create --name="$TARGET_DB_NAME"
 docker-compose up -d
 docker ps
 
-# shellcheck disable=SC2046
-# shellcheck disable=SC2006
-# shellcheck disable=SC1083
-# shellcheck disable=SC2077
-# shellcheck disable=SC2077
-# shellcheck disable=SC2140
-until [ "`docker inspect -f {{.State.Running}} "$SOURCE_DB_DOCKER_CONTAINER_NAME"`"=="true" ];
-do
-    echo "Waiting for postgres container running..."
-    sleep 0.5;
-done;
+
 docker exec -it "$SOURCE_DB_DOCKER_CONTAINER_NAME" psql -U "$DB_USER" -c "create database $SOURCE_DB_NAME"
-# shellcheck disable=SC2046
-# shellcheck disable=SC1083
-# shellcheck disable=SC1083
-# shellcheck disable=SC2077
-# shellcheck disable=SC2140
-# shellcheck disable=SC2006
-until [ "`docker inspect -f {{.State.Running}} "$TARGET_DB_DOCKER_CONTAINER_NAME"`"=="true" ];
-do
-    echo "Waiting for postgres container running..."
-    sleep 0.5;
-done;
+docker inspect "$SOURCE_DB_DOCKER_CONTAINER_NAME"
 docker exec -it "$TARGET_DB_DOCKER_CONTAINER_NAME" psql -U "$DB_USER" -c "create database $TARGET_DB_NAME"
 
 docker cp tcph/dss.ddl "$SOURCE_DB_DOCKER_CONTAINER_NAME":/
