@@ -1,5 +1,6 @@
 import psycopg2
 from dotenv import dotenv_values, find_dotenv
+import os
 
 
 # Параметры соединения используя переменные окружения из файла .env
@@ -15,6 +16,9 @@ target_conn_string = f"host='localhost' " \
                      f"user='{config.get('DB_USER')}' " \
                      f"password='{config.get('DB_PASSWORD')}'"
 dirname = 'temp_etl_data/'
+if not os.path.exists(dirname):
+    os.mkdir(dirname)
+
 try:
     with psycopg2.connect(source_conn_string) as conn, conn.cursor() as cursor:
         query = """
@@ -28,13 +32,13 @@ try:
         for table in source_tables:
             table_file_map[table[0]] = f"{table[0]}.csv"
             q = f"COPY {table[0]} TO STDOUT WITH DELIMITER ',' CSV HEADER;"
-            with open(f'{dirname}{table[0]}.csv', 'w') as f:
-                cursor.copy_expert(q, f)
+            if not os.path.exists(f"{dirname}{table[0]}.csv"):
+                with open(f'{dirname}{table[0]}.csv', 'w') as f:
+                    cursor.copy_expert(q, f)
 
     with psycopg2.connect(target_conn_string) as conn, conn.cursor() as cursor:
         for table in table_file_map.keys():
             q = f"COPY {table} from STDIN WITH DELIMITER ',' CSV HEADER;"
-            print(q)
             with open(f'{dirname}{table_file_map[table]}', 'r') as f:
                 cursor.copy_expert(q, f)
     print('ETL finished.')
