@@ -6,7 +6,7 @@ services:
     ports:
       - "${SOURCE_DB_DOCKER_CONTAINER_PORT}:5432"
     volumes:
-      - ${SOURCE_DB_NAME}:/var/lib/postgresql/data
+      - my_dbdata:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_USER=${DB_USER}
@@ -16,8 +16,14 @@ services:
     ports:
       - "${TARGET_DB_DOCKER_CONTAINER_PORT}:5432"
     volumes:
-      - ${TARGET_DB_NAME}:/var/lib/postgresql/data
+      - my_dbdata2:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_USER=${DB_USER}
 volumes:
+  my_dbdata:
+    external:
+      name: ${SOURCE_DB_NAME}
+  my_dbdata2:
+    external:
+      name: ${TARGET_DB_NAME}
