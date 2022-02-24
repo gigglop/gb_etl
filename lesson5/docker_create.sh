@@ -6,7 +6,19 @@ docker volume create --name="$TARGET_DB_NAME"
 docker-compose up -d
 docker ps
 
+# shellcheck disable=SC2046
+until nc -z $(sudo docker inspect --format='{{.NetworkSettings.IPAddress}}' $SOURCE_DB_DOCKER_CONTAINER_NAME) 5432
+do
+    echo "waiting for postgres container..."
+    sleep 0.5
+done
 docker exec -it "$SOURCE_DB_DOCKER_CONTAINER_NAME" psql -U "$DB_USER" -c "create database $SOURCE_DB_NAME"
+# shellcheck disable=SC2046
+until nc -z $(sudo docker inspect --format='{{.NetworkSettings.IPAddress}}' $TARGET_DB_DOCKER_CONTAINER_NAME) 5432
+do
+    echo "waiting for postgres container..."
+    sleep 0.5
+done
 docker exec -it "$TARGET_DB_DOCKER_CONTAINER_NAME" psql -U "$DB_USER" -c "create database $TARGET_DB_NAME"
 
 docker cp tcph/dss.ddl "$SOURCE_DB_DOCKER_CONTAINER_NAME":/

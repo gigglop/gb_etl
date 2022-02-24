@@ -2,7 +2,7 @@ import psycopg2
 from dotenv import dotenv_values, find_dotenv
 
 
-# Параметры соединения
+# Параметры соединения используя переменные окружения из файла .env
 config = dotenv_values(find_dotenv('.env'))
 source_conn_string = f"host='localhost' " \
                      f"port={config.get('SOURCE_DB_DOCKER_CONTAINER_PORT')} " \
