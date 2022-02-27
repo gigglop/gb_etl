@@ -1,0 +1,29 @@
+version: "3"
+services:
+  db:
+    image: "postgres:11"
+    container_name: "${SOURCE_DB_DOCKER_CONTAINER_NAME}"
+    ports:
+      - "${SOURCE_DB_DOCKER_CONTAINER_PORT}:5432"
+    volumes:
+      - my_dbdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_USER=${DB_USER}
+  db2:
+    image: "postgres:11"
+    container_name: "${TARGET_DB_DOCKER_CONTAINER_NAME}"
+    ports:
+      - "${TARGET_DB_DOCKER_CONTAINER_PORT}:5432"
+    volumes:
+      - my_dbdata2:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_USER=${DB_USER}
+volumes:
+  my_dbdata:
+    external:
+      name: ${SOURCE_DB_NAME}
+  my_dbdata2:
+    external:
+      name: ${TARGET_DB_NAME}
