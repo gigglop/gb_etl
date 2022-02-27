@@ -10,7 +10,19 @@
   - `TARGET_DB_NAME` - название БД таргета
 - общие параметры подключения к обеим БД:
   - `DB_USER` - имя пользователя
-  - `DB_PASSWORD` - пароль
+  - `DB_PASSWORD` - пароль 
+
+Ниже пример наполнения `.env`:
+```
+SOURCE_DB_DOCKER_CONTAINER_NAME=my_postgres_source
+SOURCE_DB_DOCKER_CONTAINER_PORT=54320
+SOURCE_DB_NAME=my_source_database
+TARGET_DB_DOCKER_CONTAINER_NAME=my_postgres_target
+TARGET_DB_DOCKER_CONTAINER_PORT=5433
+TARGET_DB_NAME=my_target_database
+DB_USER=root
+DB_PASSWORD=postgres
+```
 
 Помимо этого в директории с файлами скриптов должна присутвовать поддиректория ```tcph```, содержащая в себе файлы:
 - файл .ddl, описывающий структуры БД:
