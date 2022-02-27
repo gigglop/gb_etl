@@ -16,3 +16,5 @@ _.py
 tcph/
 *.csv
 temp_etl_data/
+airflow/logs/
+airflow/plugins/
