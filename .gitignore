@@ -1,5 +1,5 @@
 # general https://github.com/github/gitignore/blob/master/Python.gitignore
-lesson5/.env
+*.env
 .venv
 env/
 venv/
