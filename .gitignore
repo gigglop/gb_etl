@@ -15,8 +15,4 @@ __pycache__/
 _.py
 tcph/
 *.csv
-<<<<<<< HEAD
-docker_clean.sh
-=======
 temp_etl_data/
->>>>>>> 1e76643e5e25947fe53aeaf56fe78deeacd42276
