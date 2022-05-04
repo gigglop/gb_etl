@@ -16,3 +16,4 @@ _.py
 tcph/
 *.csv
 temp_etl_data/
+docker_clean.sh
