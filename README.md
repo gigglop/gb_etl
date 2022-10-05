@@ -8,6 +8,9 @@
   - `TARGET_DB_DOCKER_CONTAINER_NAME` - название docker-контейнера 
   - `TARGET_DB_DOCKER_CONTAINER_PORT` - внешний порт, чтобы подключиться к БД в контейнере 
   - `TARGET_DB_NAME` - название БД таргета
+- параметры для подключения и создания контейнера с airflow
+  - `AIRFLOW_DOCKER_CONTAINER_NAME` - название docker-контейнера
+  - `AIRFLOW_DOCKER_CONTAINER_PORT` - внешний порт, чтобы подключиться к веб-сервису в контейнере
 - общие параметры подключения к обеим БД:
   - `DB_USER` - имя пользователя
   - `DB_PASSWORD` - пароль 
@@ -20,6 +23,8 @@ SOURCE_DB_NAME=my_source_database
 TARGET_DB_DOCKER_CONTAINER_NAME=my_postgres_target
 TARGET_DB_DOCKER_CONTAINER_PORT=5433
 TARGET_DB_NAME=my_target_database
+AIRFLOW_DOCKER_CONTAINER_NAME=my_airflow
+AIRFLOW_DOCKER_CONTAINER_PORT=8082
 DB_USER=root
 DB_PASSWORD=postgres
 ```
@@ -47,7 +52,9 @@ DB_PASSWORD=postgres
 ### Порядок запуска скриптов
 1. Для создания контейнеров в директории с файлом docker-compose.yml выполнить: `bash docker_create_containers.sh`
 2. Для создания БД и наполнения БД источника в контейнерах требуется в директории с папкой tcph выполнить: `bash docker_create_db.sh`
-3. Запустить скрипт, выполняющий процесс ETL из БД источника в БД таргета: `python3 etl.py` 
+3. Запустить процесс ETL из БД источника в БД таргета можно двумя способами:
+   * выполнить python-скрипт `etl.py`
+   * ?
 
 ### Удаление контейнеров и используемого места на диске
-Находясь в директории запустит ьскрипт из командной оболочки: `bash docker_rm.sh`
+Находясь в директории запустить скрипт из командной оболочки: `bash docker_rm.sh`
