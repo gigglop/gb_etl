@@ -15,6 +15,6 @@ __pycache__/
 _.py
 tcph/
 *.csv
-airflow/logs/
-airflow/plugins/
-docker_clean.sh
+airflow/*
+!airflow/dags/*
+airflow/dags/__pycache__
