@@ -46,7 +46,7 @@ DB_PASSWORD=postgres
  * установленный `python version 3.9` и выше с пакетами:
    * `psycopg2` 
    * `python-dotenv`
- * `docker-compose version 1.25.0` и выше
+ * `docker-ce docker-ce-cli containerd.io docker-compose-plugin`
  * командная оболочка `bash`
 
 ### Порядок запуска скриптов
