@@ -3,7 +3,7 @@ source .env
 
 docker exec -it "$AIRFLOW_DOCKER_CONTAINER_NAME" sh -c "
 airflow connections -a \
-    --conn_id '$SOURCE_DB_NAME' \
+    --conn_id '$AIRFLOW_SOURCE_CONNECTION_NAME' \
     --conn_type 'Postgres' \
     --conn_login '$DB_USER' \
     --conn_password '$DB_PASSWOaRD' \
@@ -13,7 +13,7 @@ airflow connections -a \
 "
 docker exec -it "$AIRFLOW_DOCKER_CONTAINER_NAME" sh -c "
 airflow connections -a \
-    --conn_id '$TARGET_DB_NAME' \
+    --conn_id '$AIRFLOW_TARGET_CONNECTION_NAME' \
     --conn_type 'Postgres' \
     --conn_login '$DB_USER' \
     --conn_password '$DB_PASSWORD' \

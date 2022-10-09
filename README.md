@@ -8,9 +8,11 @@
   - `TARGET_DB_DOCKER_CONTAINER_NAME` - название docker-контейнера 
   - `TARGET_DB_DOCKER_CONTAINER_PORT` - внешний порт, чтобы подключиться к БД в контейнере 
   - `TARGET_DB_NAME` - название БД таргета
-- параметры для подключения и создания контейнера с airflow
+- параметры для подключения и создания контейнера с airflow, настройки соединений airflow:
   - `AIRFLOW_DOCKER_CONTAINER_NAME` - название docker-контейнера
   - `AIRFLOW_DOCKER_CONTAINER_PORT` - внешний порт, чтобы подключиться к веб-сервису в контейнере
+  - `AIRFLOW_SOURCE_CONNECTION_NAME` - название соединения в airflow для подключения в SOURCE БД 
+  - `AIRFLOW_TARGET_CONNECTION_NAME` - название соединения в airflow для подключения в TARGET БД
 - общие параметры подключения к обеим БД:
   - `DB_USER` - имя пользователя
   - `DB_PASSWORD` - пароль 
@@ -24,7 +26,9 @@ TARGET_DB_DOCKER_CONTAINER_NAME=my_postgres_target
 TARGET_DB_DOCKER_CONTAINER_PORT=5433
 TARGET_DB_NAME=my_target_database
 AIRFLOW_DOCKER_CONTAINER_NAME=my_airflow
-AIRFLOW_DOCKER_CONTAINER_PORT=8082
+AIRFLOW_DOCKER_CONTAINER_PORT=18082
+AIRFLOW_SOURCE_CONNECTION_NAME=source_conn
+AIRFLOW_TARGET_CONNECTION_NAME=target_conn
 DB_USER=root
 DB_PASSWORD=postgres
 ```
