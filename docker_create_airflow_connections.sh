@@ -6,7 +6,7 @@ airflow connections -a \
     --conn_id '$AIRFLOW_SOURCE_CONNECTION_NAME' \
     --conn_type 'Postgres' \
     --conn_login '$DB_USER' \
-    --conn_password '$DB_PASSWOaRD' \
+    --conn_password '$DB_PASSWORD' \
     --conn_host 'db' \
     --conn_port '5432' \
     --conn_schema '$SOURCE_DB_NAME'
