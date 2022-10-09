@@ -32,8 +32,6 @@ services:
     command: webserver
 volumes:
   my_dbdata:
-    external:
-      name: ${SOURCE_DB_NAME}
+    name: ${SOURCE_DB_NAME}
   my_dbdata2:
-    external:
-      name: ${TARGET_DB_NAME}
+    name: ${TARGET_DB_NAME}
