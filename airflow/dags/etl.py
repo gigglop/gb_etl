@@ -21,8 +21,8 @@ DEFAULT_ARGS = {
 
 
 def select(**kwargs):
-    postgres_hook = PostgresHook(conn_name_attr='source_conn')
-    postgres_hook.bulk_load('customer', f"tmp_customer")
+    postgres_hook = PostgresHook(postgres_conn_id='source_conn')
+    postgres_hook.bulk_load(table='customer', tmp_file="tmp_customer")
 
 
 def insert(**kwargs):
