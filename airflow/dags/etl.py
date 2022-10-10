@@ -20,14 +20,14 @@ DEFAULT_ARGS = {
 }
 
 
-def select(conn_id, table):
-    postgres_hook = PostgresHook(conn_name_attr=conn_id)
-    postgres_hook.bulk_dump(table, f'tmp_{table}')
+def select(**kwargs):
+    postgres_hook = PostgresHook(conn_name_attr=kwargs['conn_id'])
+    postgres_hook.bulk_dump(kwargs['table'], f"tmp_{kwargs['table']}")
 
 
-def insert(conn_id, table):
-    postgres_hook = PostgresHook(conn_name_attr=conn_id)
-    postgres_hook.bulk_load(table, f'tmp_{table}')
+def insert(**kwargs):
+    postgres_hook = PostgresHook(conn_name_attr=kwargs['conn_id'])
+    postgres_hook.bulk_load(kwargs['table'], f"tmp_{kwargs['table']}")
 
 
 with DAG(
