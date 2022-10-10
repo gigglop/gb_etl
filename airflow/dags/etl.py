@@ -39,7 +39,7 @@ def select(**kwargs):
 
 def insert(**kwargs):
     postgres_hook = PostgresHook(postgres_conn_id=kwargs['conn_id'])
-    postgres_hook.bulk_dump(kwargs['table'], f"tmp_{kwargs['table']}")
+    postgres_hook.bulk_load(kwargs['table'], f"tmp_{kwargs['table']}")
 
 
 with DAG(
