@@ -20,6 +20,18 @@ DEFAULT_ARGS = {
 }
 
 
+TABLE_LIST = [
+    'customer',
+    'lineitem',
+    'nation',
+    'orders',
+    'part',
+    'partsupp',
+    'region',
+    'supplier'
+]
+
+
 def select(**kwargs):
     postgres_hook = PostgresHook(postgres_conn_id=kwargs['conn_id'])
     postgres_hook.bulk_dump(kwargs['table'], f"tmp_{kwargs['table']}")
