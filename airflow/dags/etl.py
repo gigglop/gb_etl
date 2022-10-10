@@ -2,7 +2,7 @@ from datetime import datetime
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.hooks.postgres_hook import PostgresHook
-
+import os
 
 # from dotenv import dotenv_values, find_dotenv
 # config = dotenv_values(find_dotenv('.env'))
@@ -40,6 +40,7 @@ def select(**kwargs):
 def insert(**kwargs):
     postgres_hook = PostgresHook(postgres_conn_id=kwargs['conn_id'])
     postgres_hook.bulk_load(kwargs['table'], f"tmp_{kwargs['table']}")
+    os.remove(f"tmp_{kwargs['table']}")
 
 
 dag = DAG(
