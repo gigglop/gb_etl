@@ -61,7 +61,7 @@ for table in TABLE_LIST:
     )
 
     insert_into_table = PythonOperator(
-        task_id=f'select_into_target_{table}',
+        task_id=f'insert_into_target_{table}',
         python_callable=insert,
         op_kwargs={
             'conn_id': 'target_conn',
