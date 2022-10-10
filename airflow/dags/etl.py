@@ -21,12 +21,12 @@ DEFAULT_ARGS = {
 
 
 def select(**kwargs):
-    postgres_hook = PostgresHook(postgres_conn_id='source_conn')
-    postgres_hook.bulk_load(table='customer', tmp_file="tmp_customer")
+    postgres_hook = PostgresHook(postgres_conn_id=kwargs['conn_id'])
+    postgres_hook.bulk_dump(kwargs['table'], f"tmp_{kwargs['table']}")
 
 
 def insert(**kwargs):
-    postgres_hook = PostgresHook(conn_name_attr=kwargs['conn_id'])
+    postgres_hook = PostgresHook(postgres_conn_id=kwargs['conn_id'])
     postgres_hook.bulk_dump(kwargs['table'], f"tmp_{kwargs['table']}")
 
 
@@ -39,10 +39,10 @@ with DAG(
     select_from_table = PythonOperator(
         task_id='select_from_table',
         python_callable=select,
-        # op_kwargs={
-        #     'conn_id': 'source_conn',
-        #     'table': 'customer'
-        # }
+        op_kwargs={
+            'conn_id': 'source_conn',
+            'table': 'customer'
+        }
     )
 
     insert_into_table = PythonOperator(
