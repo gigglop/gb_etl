@@ -42,28 +42,32 @@ def insert(**kwargs):
     postgres_hook.bulk_load(kwargs['table'], f"tmp_{kwargs['table']}")
 
 
-with DAG(
-    dag_id="test_customer",
+dag = DAG(
+    dag_id="etl",
     default_args=DEFAULT_ARGS,
     schedule_interval="@daily",
-    tags=['data-flow'],
-) as dag:
+    tags=['data-flow']
+)
+for table in TABLE_LIST:
+
     select_from_table = PythonOperator(
-        task_id='select_from_table',
+        task_id=f'select_from_source_{table}',
         python_callable=select,
         op_kwargs={
             'conn_id': 'source_conn',
-            'table': 'customer'
-        }
+            'table': table
+        },
+        dag=dag
     )
 
     insert_into_table = PythonOperator(
-        task_id='insert_into_table',
+        task_id=f'select_into_target_{table}',
         python_callable=insert,
         op_kwargs={
             'conn_id': 'target_conn',
-            'table': 'customer'
-        }
+            'table': table
+        },
+        dag=dag
     )
 
     select_from_table >> insert_into_table
