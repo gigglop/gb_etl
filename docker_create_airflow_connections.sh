@@ -1,7 +1,7 @@
 #!/bin/bash
 source .env
 
-docker exec -it $AIRFLOW_DOCKER_CONTAINER_NAME sh -c "export AIRFLOW_CONN_SOURCE_CONN=postgresql://$DB_USER:$DB_PASSWORD@db:5432/$SOURCE_DB_NAME"
+docker exec -it "$AIRFLOW_DOCKER_CONTAINER_NAME" sh -c "airflow connections -a --conn_id $AIRFLOW_SOURCE_CONNECTION_NAME' --conn_uri postgresql://$DB_USER:$DB_PASSWORD@db:5432/$SOURCE_DB_NAME"
 
 docker exec -it "$AIRFLOW_DOCKER_CONTAINER_NAME" sh -c "
 airflow connections -a \
