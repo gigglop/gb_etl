@@ -12,6 +12,8 @@ import os
 
 DEFAULT_ARGS = {
     "owner": "airflow",
+    "start_date": datetime(2022, 10, 10),
+    "catchup": False,
     "retries": 1,
     "email_on_failure": False,
     "email_on_retry": False,
