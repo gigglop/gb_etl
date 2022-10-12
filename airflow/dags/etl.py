@@ -8,7 +8,6 @@ import os
 DEFAULT_ARGS = {
     "owner": "airflow",
     "start_date": datetime(2022, 10, 10),
-    "catchup": False,
     "retries": 1,
     "email_on_failure": False,
     "email_on_retry": False,
@@ -43,7 +42,8 @@ dag = DAG(
     dag_id="etl",
     default_args=DEFAULT_ARGS,
     schedule_interval="@daily",
-    tags=['data-flow']
+    tags=['data-flow'],
+    catchup=False
 )
 for table in TABLE_LIST:
 
