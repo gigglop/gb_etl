@@ -27,6 +27,7 @@ services:
       - "${AIRFLOW_DOCKER_CONTAINER_PORT}:8080"
     environment:
       - PYTHONPATH=/usr/local/airflow/operators/
+      - AIRFLOW__CORE__FERNET_KEY=7k4uN2evxtGTBuDCk6XGiThBCZl9Q5OqzLYyyCDJCGM=
     volumes:
       - ./airflow:/usr/local/airflow
     command: webserver
