@@ -28,6 +28,8 @@ services:
     environment:
       - PYTHONPATH=/usr/local/airflow/operators/
       - AIRFLOW__CORE__FERNET_KEY=${FERNET_KEY}
+      - AIRFLOW_SOURCE_CONNECTION_NAME=$AIRFLOW_SOURCE_CONNECTION_NAME
+      - AIRFLOW_TARGET_CONNECTION_NAME=$AIRFLOW_TARGET_CONNECTION_NAME
     volumes:
       - ./airflow:/usr/local/airflow
     command: webserver
