@@ -4,11 +4,6 @@ from airflow.operators.python_operator import PythonOperator
 from airflow.hooks.postgres_hook import PostgresHook
 import os
 
-# from dotenv import dotenv_values, find_dotenv
-# config = dotenv_values(find_dotenv('.env'))
-# config.get('AIRFLOW_SOURCE_CONNECTION_NAME')
-# config.get('AIRFLOW_TARGET_CONNECTION_NAME')
-
 
 DEFAULT_ARGS = {
     "owner": "airflow",
@@ -56,7 +51,7 @@ for table in TABLE_LIST:
         task_id=f'select_from_source_{table}',
         python_callable=select,
         op_kwargs={
-            'conn_id': 'source_conn',
+            'conn_id': os.environ['AIRFLOW_SOURCE_CONNECTION_NAME'],
             'table': table
         },
         dag=dag
@@ -66,7 +61,7 @@ for table in TABLE_LIST:
         task_id=f'insert_into_target_{table}',
         python_callable=insert,
         op_kwargs={
-            'conn_id': 'target_conn',
+            'conn_id': os.environ['AIRFLOW_TARGET_CONNECTION_NAME'],
             'table': table
         },
         dag=dag
